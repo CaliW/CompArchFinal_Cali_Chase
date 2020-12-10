@@ -1,4 +1,5 @@
-# CompArchFinal_Cali_Chase
+# CompArchFinal_Snake_in_Assembly
+Creators: Cali W & Chase J
 Snake Game in MARS/MIPS Assembly
 
 Background Terminology:
