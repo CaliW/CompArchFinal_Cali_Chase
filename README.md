@@ -50,23 +50,55 @@ Writing in Assembly
 
 .data vs .text
 
-commenting
+Commenting: Comment code using #
 
-common commands (aka  commands used in snake code
-- li vs lw & sw
-- j (j, jr, jal)
+Common commands (aka  commands used in snake code):
+- li vs lw & sw: load and save
+  - li = load integer
+  - lw = load word
+  - sw = save word
+- j (j, jr, jal): jump
+  - j = jump
+  - jr = jump register
+  - jal = jump to line
 - bne & beq & beqz
 - move
-- math (add, mul, ...) (add vs. addiu)
-- syscall
-- sll
-- more Assembly commands can be found here: [cheat sheet](comparch cheet sheet link here)
+- add & addiu & mul (computational commands)
+  - add adds, mul multiplies, etc.
+  - add and addiu are both addition commands, but add combines two registers while addiu combines a register with an unsigned integer.
+  ```
+  add $s3, $a0, $zero  #$s3 = $a0 + $zero, this is typically a save command as $zero = 0 and $s3 and $a0 now store the same value.
+  addiu $a0, $a0, 1    #$a0 = $a0 + 1, this command adds 1 to $a0.
+  ```
+- sll: shift left logical. 
+  - sll shifts all digits of a binary number left by n spaces. It is a quick way to multply the number by 2^n because of how binary works. 
+  - For example b'1010 = 10. If every digit were shifted left 1, the binary number would be b'10100 which equals 20 (which is 10 * 2^1. Likewise if everything were shifted right 1, b'101 = 5 (10 / 2^1).
+   ```
+  sll $t0, $s0, 2  #multiplies $s0 by 4 (2^2) and writes it to $t0
+  ```
+  - [More information](https://en.wikipedia.org/wiki/Logical_shift)
+- syscall: sycall is a command that can call a number of system services, mainly for input and output purposes. Sycall can be used for many things including  making and using input text boxes, opening files, creating sound effects, outputing random integers, and more.
+  - How to use SYSCALL system services
+    1. Load the service number in register $v0. (The integer stored in $v0 selects the type of system service to be run)
+    2. Load argument values, if any, in $a0, $a1, $a2, or $f12 as specified. (ex. li $a0, 28)
+    3. Issue the SYSCALL instruction. (type syscall)
+    4. Retrieve return values, if any, from result registers as specified.
+  ```
+  #play a sound tune to signify game over
+	li $v0, 31
+	li $a0, 28
+	li $a1, 250
+	li $a2, 32
+	li $a3, 127
+	syscall
+  ```
+- more Assembly commands can be found in the cheat sheet here: [MIPS Green Sheet](https://inst.eecs.berkeley.edu/~cs61c/resources/MIPS_Green_Sheet.pdf)
 
-functions
+Functions:
 
-jumping
+Jumping:
 
-how registers work
+How registers work:
 
 ## How to build environment and use software:
 ### Environment:
@@ -82,7 +114,7 @@ The Bitmap Display tool is used to display graphics using Assembly code in MARS.
 sw $a1, ($a0) 	#fills the coordinate with specified color
 ```
 sw saves a word from a register into RAM, $a1 is the source of the information that will be written in memory, $a0 is the register holding the memory address
-And if there were a number outside the parentheses of $a: 
+And if there were a number outside the parentheses of $a0: 
 ```
 sw $a1, 5($a0)
 ```
@@ -105,9 +137,10 @@ The Keyboard and Display MMIO Simulator tool is used to allow users to contol gr
 
 ## Video Tutorials:
 
-## Where to find more information (additional resources):
+## Where to find more information (additional resources we found useful):
 - [Bitmap Display](https://www.chegg.com/homework-help/questions-and-answers/mips-assembly-language-using-mars-drawing-bitmap-display-requires-first-item-data-section--q56523687)
 - [Using Syscall](https://courses.missouristate.edu/KenVollmar/mars/Help/SyscallHelp.html)
-- 
+- [MARS/MIPS tutorial](https://bytes.usc.edu/files/ee109/documents/MARS_Tutorial.pdf)
 
 ## Code next steps:
+- Write code that prevents fruit from spawning inside snake.
