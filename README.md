@@ -46,7 +46,27 @@ Because Assembly languages have a 1:1 command correspondance with Machine Langua
 and more
 
 ### More Background
-Like what? Some other information needed to understand our project better.
+Writing in Assembly
+
+.data vs .text
+
+commenting
+
+common commands (aka  commands used in snake code
+- li vs lw & sw
+- j (j, jr, jal)
+- bne & beq & beqz
+- move
+- math (add, mul, ...) (add vs. addiu)
+- syscall
+- sll
+- more Assembly commands can be found here: [cheat sheet](comparch cheet sheet link here)
+
+functions
+
+jumping
+
+how registers work
 
 ## How to build environment and use software:
 ### Environment:
@@ -56,17 +76,25 @@ No other software packages were needed to run MIPS assembly code, but there are 
 ### MARS Tools
 In this snake game we used 2 of the built-in tools in MARS: the Bitmap Display tool for displaying the snake game, and the Keyboard and Display MMIO Simulator tool for controlling the snake via keybinding. Both of these tools can be accessed and opened via the Tools dropdown menu in the menu bar at the top of the MARS window. (insert image? or reference image? or video? of MARS Tools menu)
 
+#### Bitmap Display
 The Bitmap Display tool is used to display graphics using Assembly code in MARS. The bitmap display can only plot pixels that are written to the memory locations  where the display buffer is located. This means that in order to create graphics, you have to actually write the memory locations of the pixels you want to plot using the sw (save word) command.
-...
+```
 sw $a1, ($a0) 	#fills the coordinate with specified color
-...
+```
 sw saves a word from a register into RAM, $a1 is the source of the information that will be written in memory, $a0 is the register holding the memory address
-And if there were a number outside the parentheses of $a0,
-...
+And if there were a number outside the parentheses of $a: 
+```
 sw $a1, 5($a0)
-... 
-that number (i.e. 5) would be the offset added to the address register.
+```
+that number (i.e. 5) would be the offset added to the address register. (Though we didn't need the offset in our project)
 
+Example code for drawing rectangles can be found here:
+
+Here is how you set up the settings for the bitmap display:
+
+For the bitmap display to work you must first click the Connect to MIPS button.
+
+#### MMIO keybinding
 The Keyboard and Display MMIO Simulator tool is used to allow users to contol graphics via keybinding.
 
 ## Understanding the code: 
@@ -78,5 +106,8 @@ The Keyboard and Display MMIO Simulator tool is used to allow users to contol gr
 ## Video Tutorials:
 
 ## Where to find more information (additional resources):
+- [Bitmap Display](https://www.chegg.com/homework-help/questions-and-answers/mips-assembly-language-using-mars-drawing-bitmap-display-requires-first-item-data-section--q56523687)
+- [Using Syscall](https://courses.missouristate.edu/KenVollmar/mars/Help/SyscallHelp.html)
+- 
 
 ## Code next steps:
