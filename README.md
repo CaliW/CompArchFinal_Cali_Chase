@@ -23,10 +23,11 @@ We chose to make a snake game using assembly because we wanted to gain a deeper 
 - Assembly makes it possible to manipulate hardware directly, access specialized processor instructions, and address critical perfromance issues.
 - Assembly language is typically used for coding device drivers, real-time systems, low-level embedded systems, boot codes, reverse engineering and more.
 - Assembly language is as close to the processor as you can get as a programmer and is fascinating as a result.
+- Learning Assembly will make you a better software architect.
 
 We also chose to expand our project to incorporate a strong teaching component. As newcomers to Assembly we found there was a steep learning curve to even find what we needed to start the project, let alone make significant progress in the short time we had. Assembly language is cryptic. As a result we decided to document and share our experiences and findings here on github and make and share tutorial videos linked here in an attempt to demystify Assembly language.
 
-## Background Terminology:
+## Background Infromation:
 ### Languages
 Programming languages can be roughly categorized into three categories, High-level programming languages, Assembly language (low-level), and Machine Languages (low-level). 
 
@@ -45,24 +46,63 @@ Because Assembly languages have a 1:1 command correspondance with Machine Langua
 - IBM
 and more
 
-### More Background
-Writing in Assembly
+### Writing in MIPS Assembly
 
-.data vs .text
+#### .data vs .text:
 
-Commenting: Comment code using #
+#### Functions:
 
-Common commands (aka  commands used in snake code):
-- li vs lw & sw: load and save
+#### Control Flow Instructions aka Jumping & Branching: 
+The line of code being run is controlled by the PC (program counter). Each time a line of code is run the PC is increased by 4 and the next line of code is run. The PC in increased by 4 (and not 1 or 2 or whatever because in MIPS, registers are "words" and words are 32 bits, or 4 bytes. This isn't super important but is interesting to know. 
+
+Jump and Branch commands can be used to jump to any line of code, not just the next line. Jumping simply changes the PC to whatever line you want to run next. Branching only does this if certain conditions have been met. Both will be explained further in the Common Commands section below.
+
+#### How registers work:
+
+#### Commenting: 
+Comment code using #
+
+#### Common commands (aka  commands used in snake code):
+- li & lw & sw: Load and Save
   - li = load integer
-  - lw = load word
-  - sw = save word
-- j (j, jr, jal): jump
-  - j = jump
-  - jr = jump register
-  - jal = jump to line
-- bne & beq & beqz
-- move
+  ```
+  li $a0, 79  #stores 79 into register $a0
+  ```
+  - lw = load word from memory into a register.
+  ```
+  lw $t5, score  #$t5 = destination register, score is stored in $t5.
+  ```
+  - sw = save word from a register into RAM.
+  ```
+  sw $t5, score  #$t5 is the source regster, the contents of $t5 is being stored in score.
+  ```
+- j & jr & jal: Jumping
+jumping commands jump to a new line in code instead of running through each line of code in the assembly file once. The jump command loads a new value into the PC (program counter) register, which stores the value of the instruction being executed. 
+  - j = jump to immediate: loads an immediate value (either integer or label with associated integer) into the PC register. This immediate value is either a numeric offset or a label (and the assembler converts the label into an offset). 
+  ```
+  j DrawFruit  #jumps to DrawFruit function
+  ```
+    - jal = jump and link: Does the same thing as j, but also stores the PC of the next line in the register $ra (aka return address) such that you can return to the same place you left from after completing the instructions at the jump address.
+  ```
+  jal DrawPixel #jumps to DrawPixel function and saves the return address
+  ```
+  - jr = jump to register:
+  ```
+  jr $ra  # jumps to whatever line is stored in the return address registe ($ra)
+  ```
+- bne & beq & beqz: Branching
+```
+bne $t1, 64, LeftLoop
+```
+```
+beq $a0, $a1, Same
+```
+```
+beqz $a0, main#jump back to start of program
+```
+
+- move: 
+
 - add & addiu & mul (computational commands)
   - add adds, mul multiplies, etc.
   - add and addiu are both addition commands, but add combines two registers while addiu combines a register with an unsigned integer.
@@ -94,12 +134,6 @@ Common commands (aka  commands used in snake code):
   ```
 - more Assembly commands can be found in the cheat sheet here: [MIPS Green Sheet](https://inst.eecs.berkeley.edu/~cs61c/resources/MIPS_Green_Sheet.pdf)
 
-Functions:
-
-Jumping:
-
-How registers work:
-
 ## How to build environment and use software:
 ### Environment:
 Before you can write and run Assembly code, you need to set up your software environment. We used MARS as our assembler and simulator for MIPS assembly language. To set up MARS on your computer, click the following link and follow the download instructions: [MARS/MIPS Simulator](http://courses.missouristate.edu/KenVollmar/MARS/download.htm). Further instruction explain how to run MARS using the command line.
@@ -113,7 +147,7 @@ The Bitmap Display tool is used to display graphics using Assembly code in MARS.
 ```
 sw $a1, ($a0) 	#fills the coordinate with specified color
 ```
-sw saves a word from a register into RAM, $a1 is the source of the information that will be written in memory, $a0 is the register holding the memory address
+sw saves a word from a register into RAM, $a1 is the source of the information that will be written in memory, $a0 is the register holding the memory address.
 And if there were a number outside the parentheses of $a0: 
 ```
 sw $a1, 5($a0)
