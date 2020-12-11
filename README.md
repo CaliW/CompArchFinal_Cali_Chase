@@ -49,9 +49,25 @@ and more
 Like what? Some other information needed to understand our project better.
 
 ## How to build environment and use software:
-Before you can write and run Assembly code, you need to set up your software environment. We used MARS as our assembler and simulator for MIPS assembly language. To do that, click the following link and follow the download instructions: [MARS/MIPS Simulator](http://courses.missouristate.edu/KenVollmar/MARS/download.htm). No other software packages were needed to run MIPS assembly code, but there are other packages that exist 
--bitMap display
--MMIO keybinding
+### Environment:
+Before you can write and run Assembly code, you need to set up your software environment. We used MARS as our assembler and simulator for MIPS assembly language. To set up MARS on your computer, click the following link and follow the download instructions: [MARS/MIPS Simulator](http://courses.missouristate.edu/KenVollmar/MARS/download.htm). Further instruction explain how to run MARS using the command line.
+No other software packages were needed to run MIPS assembly code, but there are additional packages you can use for displaying code on other devices or exploring MARS/MIPS more. (put links in additional resources section or here?)
+
+### MARS Tools
+In this snake game we used 2 of the built-in tools in MARS: the Bitmap Display tool for displaying the snake game, and the Keyboard and Display MMIO Simulator tool for controlling the snake via keybinding. Both of these tools can be accessed and opened via the Tools dropdown menu in the menu bar at the top of the MARS window. (insert image? or reference image? or video? of MARS Tools menu)
+
+The Bitmap Display tool is used to display graphics using Assembly code in MARS. The bitmap display can only plot pixels that are written to the memory locations  where the display buffer is located. This means that in order to create graphics, you have to actually write the memory locations of the pixels you want to plot using the sw (save word) command.
+...
+sw $a1, ($a0) 	#fills the coordinate with specified color
+...
+sw saves a word from a register into RAM, $a1 is the source of the information that will be written in memory, $a0 is the register holding the memory address
+And if there were a number outside the parentheses of $a0,
+...
+sw $a1, 5($a0)
+... 
+that number (i.e. 5) would be the offset added to the address register.
+
+The Keyboard and Display MMIO Simulator tool is used to allow users to contol graphics via keybinding.
 
 ## Understanding the code: 
 - [Using Syscall](https://courses.missouristate.edu/KenVollmar/mars/Help/SyscallHelp.html)
