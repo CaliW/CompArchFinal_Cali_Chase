@@ -49,8 +49,19 @@ and more
 ### Writing in MIPS Assembly
 
 #### .data vs .text:
+An Assembly program can be divided into three sections: .data, .bss, and .text.  
+The data section is used for declaring initialized data or constants. This data does not change at runtime. You can declare various constant values, file names, or buffer size, etc. The bss section is used for declaring variables. The text section is used for keeping the actual code.
 
-#### Functions:
+In this snake code we only use .data and .text. The text section is read-only, it's the meat of the code, and the stuff that actually runs. The text section is loaded into memory only once (no matter how many times the code is run), which reduces memory usage and launch time. The data section is not read only, it initializes, then keeps track of the important variables in the code. The data section contains informations that could be changed during application execution and as a result, this section must be copied for every instance. In this snake game, all the initialized pieces of data in .data are words (.word) or strings (.asciiz).
+
+#### Functions/Procedures/Subroutines:
+Procedures are very important in Assembly. Each has a name and does a specific task, and the majority of the Assmebly code is spent either running procedures, or jumping between them once they've completed their job. In this snake code we have procedures that initialize variables, update snake head and tail positions, draw pixels, check direction, loop through motion, exit the game, and more.
+```
+proc_name:
+   procedure body (which can jump to other procedures and back)
+   ...
+   return value and/or jump to next procedure
+```
 
 #### Control Flow Instructions aka Jumping & Branching: 
 The line of code being run is controlled by the PC (program counter). Each time a line of code is run the PC is increased by 4 and the next line of code is run. The PC in increased by 4 (and not 1 or 2 or whatever because in MIPS, registers are "words" and words are 32 bits, or 4 bytes. This isn't super important but is interesting to know. 
@@ -58,6 +69,11 @@ The line of code being run is controlled by the PC (program counter). Each time 
 Jump and Branch commands can be used to jump to any line of code, not just the next line. Jumping simply changes the PC to whatever line you want to run next. Branching only does this if certain conditions have been met. Both will be explained further in the Common Commands section below.
 
 #### How registers work:
+Processor operations mostly involve processing data. This data can be stored in memory and accessed from thereon. However, reading data from and storing data into memory slows down the processor, as it involves complicated processes of sending the data request across the control bus and into the memory storage unit and getting the data through the same channel.
+
+To speed up the processor operations, the processor includes some internal memory storage locations, called registers.
+
+The registers store data elements for processing without having to access the memory. A limited number of registers are built into the processor chip.
 
 #### Commenting: 
 Comment code using #
@@ -74,7 +90,7 @@ Comment code using #
   ```
   - sw = save word from a register into RAM.
   ```
-  sw $t5, score  #$t5 is the source regster, the contents of $t5 is being stored in score.
+  sw $t5, score  #$t5 is the source register, the contents of $t5 is being stored in score.
   ```
 - j & jr & jal: Jumping
 jumping commands jump to a new line in code instead of running through each line of code in the assembly file once. The jump command loads a new value into the PC (program counter) register, which stores the value of the instruction being executed. 
@@ -163,6 +179,8 @@ For the bitmap display to work you must first click the Connect to MIPS button.
 #### MMIO keybinding
 The Keyboard and Display MMIO Simulator tool is used to allow users to contol graphics via keybinding.
 
+Code: ...
+
 ## Understanding the code: 
 - [Using Syscall](https://courses.missouristate.edu/KenVollmar/mars/Help/SyscallHelp.html)
 
@@ -175,6 +193,7 @@ The Keyboard and Display MMIO Simulator tool is used to allow users to contol gr
 - [Bitmap Display](https://www.chegg.com/homework-help/questions-and-answers/mips-assembly-language-using-mars-drawing-bitmap-display-requires-first-item-data-section--q56523687)
 - [Using Syscall](https://courses.missouristate.edu/KenVollmar/mars/Help/SyscallHelp.html)
 - [MARS/MIPS tutorial](https://bytes.usc.edu/files/ee109/documents/MARS_Tutorial.pdf)
+- [Assembly tutorial website](https://www.tutorialspoint.com/assembly_programming/index.htm)
 
 ## Code next steps:
 - Write code that prevents fruit from spawning inside snake.
