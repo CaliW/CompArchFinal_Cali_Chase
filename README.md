@@ -160,7 +160,13 @@ move $a1, $t1	#sets $t1 to be the same as $a1
 
 ## How to build environment and use software:
 ### Environment:
-Before you can write and run Assembly code, you need to set up your software environment. We used MARS as our assembler and simulator for MIPS assembly language. To set up MARS on your computer, click the following link and follow the download instructions: [MARS/MIPS Simulator](http://courses.missouristate.edu/KenVollmar/MARS/download.htm). Further instruction explain how to run MARS using the command line.
+Before you can write and run Assembly code, you need to set up your software environment. We used MARS as our assembler and simulator for MIPS assembly language. To set up MARS on your computer, click the following link and follow the download instructions: [MARS/MIPS Simulator](http://courses.missouristate.edu/KenVollmar/MARS/download.htm). 
+Bascially:
+- Download Java: To use MARS, you must have Java installed on your computer Instructions in link above)
+- Download MARS: The download MARS button is at the top of the page,
+- Name file and use command window/terminal: When downloading the MARS jar file, rename the jar file to "Mars.jar" or something similar for convenience. This allows you to run MARS via the command window using the command  java -jar Mars.jar. Or java -jar WhateverINamedMyFile.jar.
+
+MARS is friendly to Windows and Ubuntu (we know this because one of us used Windows, and the other used Ubuntu for the entirety of this project).
 No other software packages were needed to run MIPS assembly code, but there are additional packages you can use for displaying code on other devices or exploring MARS/MIPS more. (put links in additional resources section or here?)
 
 ### MARS Tools
@@ -194,6 +200,7 @@ Explain each procedure and make a system diagram
 
 
 ## Hardships we encountered (and where we explain how to deal with them):
+Do we actually want this? Or do we say we addressed this in previous sections?
 
 ## Video Tutorials:
 
@@ -206,3 +213,4 @@ Explain each procedure and make a system diagram
 
 ## Code next steps:
 - Write code that prevents fruit from spawning inside snake.
+- Play snake game on another device using additional software packages.
