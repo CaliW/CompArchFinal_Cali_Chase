@@ -214,3 +214,4 @@ Do we actually want this? Or do we say we addressed this in previous sections?
 ## Code next steps:
 - Write code that prevents fruit from spawning inside snake.
 - Play snake game on another device using additional software packages.
+- Add a points counter.
