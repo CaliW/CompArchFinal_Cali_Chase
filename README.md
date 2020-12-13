@@ -69,11 +69,12 @@ The line of code being run is controlled by the PC (program counter). Each time 
 Jump and Branch commands can be used to jump to any line of code, not just the next line. Jumping simply changes the PC to whatever line you want to run next. Branching only does this if certain conditions have been met. Both will be explained further in the Common Commands section below.
 
 #### How registers work:
-Processor operations mostly involve processing data. This data can be stored in memory and accessed from thereon. However, reading data from and storing data into memory slows down the processor, as it involves complicated processes of sending the data request across the control bus and into the memory storage unit and getting the data through the same channel.
-
-To speed up the processor operations, the processor includes some internal memory storage locations, called registers.
-
-The registers store data elements for processing without having to access the memory. A limited number of registers are built into the processor chip.
+The main internal hardware of a PC consists of a processor, memory, and registers. Registers are processor components that hold data and addresses. Reading and writing data into memory is slow when trying to process data(it's a long and complicated process). Registers are pieces of temporary memory built into the processor chip and while there are only a limited number of them, they can store data for processing without having to access memory, thus making everything much faster. MIPS has 32 floating point registers, their names, numbers, uses, and callsigns are listed here [MIPS Green Sheet](https://inst.eecs.berkeley.edu/~cs61c/resources/MIPS_Green_Sheet.pdf), and include registers like $a0, $ra, $t7, $zero, and  more, many of which are used in the snake game to store, use, and compare data.
+```
+li $a0, 79  #stores 79 into register $a0
+beq $a0, $a1, Same #branches to Same procedure if the data stores in $a1 and $a0 is equivalent
+addiu $a0, $a0, 1    #adds 1 to the value stored in register $a0
+```
 
 #### Commenting: 
 Comment code using #
@@ -107,17 +108,23 @@ jumping commands jump to a new line in code instead of running through each line
   jr $ra  # jumps to whatever line is stored in the return address registe ($ra)
   ```
 - bne & beq & beqz: Branching
+  - bne = branch not equal: 
 ```
-bne $t1, 64, LeftLoop
+bne $t1, 64, LeftLoop #if $t1 != 64, branch to LeftLoop procedure. Else, go to next line (PC increases by 4)
 ```
+  - beq = branch equal:
 ```
-beq $a0, $a1, Same
+beq $a0, $a1, Same #if $a0 == $a1, branch to Same procedure. Else, go to next line (PC increases by 4)
 ```
+  - beqz = branch to address if variable == 0:
 ```
-beqz $a0, main#jump back to start of program
+beqz $a0, main #jumps to main procedure if $a0 == 0. Else, go to next line (PC increases by 4)
 ```
 
-- move: 
+- move: Copies the first argument to the first argument
+```
+move $a1, $t1	#sets $t1 to be the same as $a1
+```
 
 - add & addiu & mul (computational commands)
   - add adds, mul multiplies, etc.
@@ -148,6 +155,7 @@ beqz $a0, main#jump back to start of program
 	li $a3, 127
 	syscall
   ```
+  - For more help in using syscall and exploring everything it can be used for, visit this website: [Using Syscall](https://courses.missouristate.edu/KenVollmar/mars/Help/SyscallHelp.html)
 - more Assembly commands can be found in the cheat sheet here: [MIPS Green Sheet](https://inst.eecs.berkeley.edu/~cs61c/resources/MIPS_Green_Sheet.pdf)
 
 ## How to build environment and use software:
@@ -182,7 +190,7 @@ The Keyboard and Display MMIO Simulator tool is used to allow users to contol gr
 Code: ...
 
 ## Understanding the code: 
-- [Using Syscall](https://courses.missouristate.edu/KenVollmar/mars/Help/SyscallHelp.html)
+Explain each procedure and make a system diagram
 
 
 ## Hardships we encountered (and where we explain how to deal with them):
@@ -194,6 +202,7 @@ Code: ...
 - [Using Syscall](https://courses.missouristate.edu/KenVollmar/mars/Help/SyscallHelp.html)
 - [MARS/MIPS tutorial](https://bytes.usc.edu/files/ee109/documents/MARS_Tutorial.pdf)
 - [Assembly tutorial website](https://www.tutorialspoint.com/assembly_programming/index.htm)
+- [MIPS Green Sheet](https://inst.eecs.berkeley.edu/~cs61c/resources/MIPS_Green_Sheet.pdf)
 
 ## Code next steps:
 - Write code that prevents fruit from spawning inside snake.
