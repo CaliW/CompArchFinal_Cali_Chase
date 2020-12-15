@@ -188,12 +188,74 @@ Example code for drawing rectangles can be found here:
 
 Here is how you set up the settings for the bitmap display:
 
+```
+#       Bitmap Display Settings:                                     
+#	Unit Width: 8						     
+#	Unit Height: 8						     
+#	Display Width: 512					     
+#	Display Height: 512					     
+#	Base Address for Display: 0x10008000 ($gp)	
+
+
+
+screenWidth: 	.word 64
+screenHeight: 	.word 64
+snakeColor: 	.word	0x0066cc	 # blue
+backgroundColor:.word	0x000000	 # black
+borderColor:    .word	0x00ff00	 # green
+
+	lw $a0, screenWidth
+	lw $a1, backgroundColor
+	mul $a2, $a0, $a0 #total number of pixels on screen
+	mul $a2, $a2, 4 #align addresses
+	add $a2, $a2, $gp #add base of gp
+	add $a0, $gp, $zero #loop counter
+FillLoop:
+	beq $a0, $a2, Init
+	sw $a1, 0($a0) #store color
+	addiu $a0, $a0, 4 #increment counter
+	j FillLoop
+```
+
+In this code, you are setting up everything that will or is going to appear on the screen.
+
+Additionally, the register $gp is a global pointer that points into the middle of a 64K block of memory that holds your constants and global variables. The objects can be quickly accessed with a single load or store instruction.
+
+
 For the bitmap display to work you must first click the Connect to MIPS button.
 
 #### MMIO keybinding
-The Keyboard and Display MMIO Simulator tool is used to allow users to contol graphics via keybinding.
+The Keyboard and Display MMIO Simulator tool is used to allow users to contol graphics via keybinding. In MIPS, some keys are already bound to a number due to it alining with ASCII characters.
 
 Code: ...
+```
+# direction variable
+# 119 - moving up - W
+# 115 - moving down - S
+# 97 - moving left - A
+# 100 - moving right - D
+# numbers are selected due to ASCII characters
+
+InputCheck:
+	lw $a0, gameSpeed
+	jal Pause
+
+#get the coordinates for direction change if needed
+	lw $a0, snakeHeadX
+	lw $a1, snakeHeadY
+	jal CoordinateToAddress
+	add $a2, $v0, $zero
+
+	#get the input from the keyboard
+	li $t0, 0xffff0000
+	lw $t1, ($t0)
+	andi $t1, $t1, 0x0001
+	beqz $t1, SelectDrawDirection #if no new input, draw in same direction
+	lw $a1, 4($t0) #store direction based on input
+```
+Once you have the keys you want to you, it is a matter of having the code recognize the keys when they are pressed. The input is given to the code and each input will jump to the code that has the instruction for what to do when that value is met.
+
+In this case, SelectDrawDirection is a variable that stores the direction of the input that is given and causes the block to move in a specific direction
 
 ## Understanding the code: 
 Explain each procedure and make a system diagram
