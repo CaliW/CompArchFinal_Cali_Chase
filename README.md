@@ -4,15 +4,15 @@ Creators: Cali W. & Chase J.
 ## What did we do
 For our final project in Computer Architecture we built and fully explained a snake game using MIPS assembly language in the MARS simulator. Due to the short timeline and a minimal starting understanding of the Assembly programming language, we borrowed heavily from Misto432 and their Assembly-Snake code: [Misto432 Assembly Snake](https://github.com/Misto423/Assembly-Snake). 
 
-We expanded on this code by...
+We expanded on this code by creating a working moving square game based off the original snake code to help user understanding with a simpler assembly script.
 
-We expanded on the documentaion of this project by including
+We expanded on the documentation of this project by including
 - definitions, background terminology, and explanations of what assembly language is and how it's used.
 - instructions for setting up a MARS/MIPS environment.
 - instructions on how and when to use the MARS Bitmap Display.
 - instructions on how and when to use the MARS Keyboard and Display MMIO Simulator.
-- explanations of hardships we encountered while learning how to make a game in a low-level programming language.
-- video tutorials.
+- explanations of hardships we encountered while learning how to make a game in a low-level programming language. (maybe?)
+- video tutorials. (inprogress)
 - additional resources.
 - next steps.
 
@@ -27,7 +27,7 @@ We chose to make a snake game using assembly because we wanted to gain a deeper 
 
 We also chose to expand our project to incorporate a strong teaching component. As newcomers to Assembly we found there was a steep learning curve to even find what we needed to start the project, let alone make significant progress in the short time we had. Assembly language is cryptic. As a result we decided to document and share our experiences and findings here on github and make and share tutorial videos linked here in an attempt to demystify Assembly language.
 
-## Background Infromation:
+## Background Information:
 ### Languages
 Programming languages can be roughly categorized into three categories, High-level programming languages, Assembly language (low-level), and Machine Languages (low-level). 
 
@@ -258,13 +258,13 @@ Once you have the keys you want to you, it is a matter of having the code recogn
 In this case, SelectDrawDirection is a variable that stores the direction of the input that is given and causes the block to move in a specific direction
 
 ## Understanding the code: 
-Explain each procedure and make a system diagram
-
+Explain each procedure and make a system diagram. (in progress)
 
 ## Hardships we encountered (and where we explain how to deal with them):
 Do we actually want this? Or do we say we addressed this in previous sections?
 
 ## Video Tutorials:
+(in progress)
 
 ## Where to find more information (additional resources we found useful):
 - [Bitmap Display](https://www.chegg.com/homework-help/questions-and-answers/mips-assembly-language-using-mars-drawing-bitmap-display-requires-first-item-data-section--q56523687)
@@ -277,3 +277,4 @@ Do we actually want this? Or do we say we addressed this in previous sections?
 - Write code that prevents fruit from spawning inside snake.
 - Play snake game on another device using additional software packages.
 - Add a points counter.
+- Fix code such that clicking a unbounded key (not w,a,s,d) does not interrupt gameplay.
