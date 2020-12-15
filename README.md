@@ -4,12 +4,13 @@ Creators: Cali W. & Chase J.
 ## What did we do
 For our final project in Computer Architecture we built and fully explained a snake game using MIPS assembly language in the MARS simulator. Due to the short timeline and a minimal starting understanding of the Assembly programming language, we borrowed heavily from Misto432 and their Assembly-Snake code: [Misto432 Assembly Snake](https://github.com/Misto423/Assembly-Snake). 
 
-We expanded on this code by creating a working moving square game based off the original snake code to help user understanding with a simpler assembly script.
+We expanded on this code by creating a working moving square game based off the original snake code to help user understanding with a simpler assembly script. This file is currently named alteredOrigSnakeCode2.asm. The original snake game (+ small comment edits) is currently named SnakeGameNoOurs.asm.
 
 We expanded on the documentation of this project by including
 - definitions, background terminology, and explanations of what assembly language is and how it's used.
 - instructions for setting up a MARS/MIPS environment.
 - instructions on how and when to use the MARS Bitmap Display.
+	- example code showing rectangle in bitDisplay.
 - instructions on how and when to use the MARS Keyboard and Display MMIO Simulator.
 - explanations of hardships we encountered while learning how to make a game in a low-level programming language. (maybe?)
 - video tutorials. (inprogress)
