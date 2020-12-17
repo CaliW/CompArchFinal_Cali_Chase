@@ -259,7 +259,7 @@ Once you have the keys you want to you, it is a matter of having the code recogn
 In this case, SelectDrawDirection is a variable that stores the direction of the input that is given and causes the block to move in a specific direction
 
 ## Understanding the code: 
-[Code Architecture Diagram](docs/Code_Architecture_Diagram.jpg)
+[Code Architecture Diagram](./Code_Architecture_Diagram.jpg)
 
 ## Hardships we encountered (and where we explain how to deal with them):
 Do we actually want this? Or do we say we addressed this in previous sections?
