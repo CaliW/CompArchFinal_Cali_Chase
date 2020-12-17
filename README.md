@@ -12,10 +12,9 @@ We expanded on the documentation of this project by including
 - instructions on how and when to use the MARS Bitmap Display.
 	- example code showing rectangle in bitDisplay.
 - instructions on how and when to use the MARS Keyboard and Display MMIO Simulator.
-- explanations of hardships we encountered while learning how to make a game in a low-level programming language. (maybe?)
-- video tutorials. (inprogress)
 - additional resources.
 - next steps.
+The expanded documentation covers everything we felt was most difficult and most useful when we first tried to understand Assembly and the snake game.
 
 ## Why we did this project:
 We chose to make a snake game using assembly because we wanted to gain a deeper understanding of how assembly works, what it is used for and gain the unique and educational experience of using low-level programming code for a somewhat large project. Learning Assembly is useful for a variety of reasons:
@@ -185,9 +184,9 @@ sw $a1, 5($a0)
 ```
 that number (i.e. 5) would be the offset added to the address register. (Though we didn't need the offset in our project)
 
-Example code for drawing rectangles can be found here:
+Example code for drawing rectangles can be found here: [Rectangle](./rectEx1.asm)
 
-Here is how you set up the settings for the bitmap display:
+For any assembly code to work properly with the bitmap display, you must manually configure the width, height, and base address settings in the bitmap display window. These settings should be listed and commented in the code as shown below.
 
 ```
 #       Bitmap Display Settings:                                     
@@ -218,17 +217,16 @@ FillLoop:
 	j FillLoop
 ```
 
-In this code, you are setting up everything that will or is going to appear on the screen.
+The uncommented portion of this code, initiates the settings for anything that will appear on the bitmap display before the game begins. The fillLoop procedure stores the initial bit colors for the entire screen before the game starts.
 
 Additionally, the register $gp is a global pointer that points into the middle of a 64K block of memory that holds your constants and global variables. The objects can be quickly accessed with a single load or store instruction.
 
-
-For the bitmap display to work you must first click the Connect to MIPS button.
+For the bitmap display to work you must first click the Connect to MIPS button before clicking the play button in MARS.
 
 #### MMIO keybinding
 The Keyboard and Display MMIO Simulator tool is used to allow users to contol graphics via keybinding. In MIPS, some keys are already bound to a number due to it alining with ASCII characters.
 
-Code: ...
+Code:
 ```
 # direction variable
 # 119 - moving up - W
@@ -253,19 +251,27 @@ InputCheck:
 	andi $t1, $t1, 0x0001
 	beqz $t1, SelectDrawDirection #if no new input, draw in same direction
 	lw $a1, 4($t0) #store direction based on input
+	
+DirectionCheck:
+	beqz $v0, InputCheck	#if input is not valid, get new input
+	sw $a1, direction	#store the new direction if valid
+	lw $t7, direction	#store the direction into $t7
 ```
-Once you have the keys you want to you, it is a matter of having the code recognize the keys when they are pressed. The input is given to the code and each input will jump to the code that has the instruction for what to do when that value is met.
-
-In this case, SelectDrawDirection is a variable that stores the direction of the input that is given and causes the block to move in a specific direction
+```
+SelectDrawDirection:
+	#check to see which direction to draw
+	beq $t7, 119, DrawUpLoop
+	beq  $t7, 115, DrawDownLoop
+	beq  $t7, 97, DrawLeftLoop
+	beq  $t7, 100, DrawRightLoop
+	#jump back to get input if an unsupported key was pressed
+	j InputCheck
+```
+Once you know what keys you want to bind, it is a matter of having the code recognize when and what keys are pressed. The integer ascii integer associated with the key pressed is loaded to the register $t0 in the line of code: li $t0, 0xffff0000. If the new direction entered is different than the previous one, the code will not branch to SelectDrawDirection (beqz $t1, SelectDrawDirection) and will continue by storing the direction value input from the keyboard into register $a1, then $t7. If the value of the direction hasn't been changed, SelectDrawDirection will run and the contents of register $t7 will be compared to the four direction integers, 119,115, 97, 100, to determine which direction, if any, the square should move.
 
 ## Understanding the code: 
+This is a full archtectural diagram of the simplified moving square code to help with understanding Assembly logic:
 [Code Architecture Diagram](./Code_Architecture_Diagram.jpg)
-
-## Hardships we encountered (and where we explain how to deal with them):
-Do we actually want this? Or do we say we addressed this in previous sections?
-
-## Video Tutorials:
-(in progress)
 
 ## Where to find more information (additional resources we found useful):
 - [Bitmap Display](https://www.chegg.com/homework-help/questions-and-answers/mips-assembly-language-using-mars-drawing-bitmap-display-requires-first-item-data-section--q56523687)
