@@ -14,6 +14,7 @@ We expanded on the documentation of this project by including
 - instructions on how and when to use the MARS Keyboard and Display MMIO Simulator.
 - additional resources.
 - next steps.
+
 The expanded documentation covers everything we felt was most difficult and most useful when we first tried to understand Assembly and the snake game.
 
 ## Why we did this project:
