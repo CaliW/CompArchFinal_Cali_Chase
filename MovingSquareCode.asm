@@ -295,7 +295,7 @@ DrawLeftLoop:
 	jal DrawPixel
 	addiu $t0, $t0, -1
 	
-	sw  $t1, squareX #Update square y-coordinate
+	sw  $t0, squareX #Update square x-coordinate
 	j InputCheck
 
 DrawRightLoop:
@@ -325,7 +325,7 @@ DrawRightLoop:
 	jal DrawPixel
 	addiu $t0, $t0, 1
 	
-	sw  $t1, squareX #Update square y-coordinate
+	sw  $t0, squareX #Update square x-coordinate
 	j InputCheck
 	
 
