@@ -220,7 +220,16 @@ FillLoop:
 
 The uncommented portion of this code, initiates the settings for anything that will appear on the bitmap display before the game begins. The fillLoop procedure stores the initial bit colors for the entire screen before the game starts.
 
-Additionally, the register $gp is a global pointer that points into the middle of a 64K block of memory that holds your constants and global variables. The objects can be quickly accessed with a single load or store instruction.
+Additionally, the register $gp is a global pointer that points to a location inside the 64K block of memory that holds the constants and global variables in this game. The $gp register points to specific adresses and pixels on the screen by converting the x and y coordinates of the pixel (stored as $a0 & $a1) into a global position. The CoordinateToAddress procedure computes the cartesian to global positioning math: $gp = $a0 + $a1 * screenwidth. This register allows specific pixels to be quickly accessed with a single load or store instruction.
+```
+CoordinateToAddress:
+	lw $v0, screenWidth 	#Store screen width into $v0
+	mul $v0, $v0, $a1	#multiply by y position
+	add $v0, $v0, $a0	#add the x position
+	mul $v0, $v0, 4		#multiply by 4
+	add $v0, $v0, $gp	#add global pointerfrom bitmap display
+	jr $ra			# return $v0
+```
 
 For the bitmap display to work you must first click the Connect to MIPS button before clicking the play button in MARS.
 
